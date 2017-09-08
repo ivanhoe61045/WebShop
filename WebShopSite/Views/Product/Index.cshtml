@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebShopSite.Models.WebShopViewModels.ProdutCreationViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<label class="alert-danger">@ViewBag.ErrorMessage</label>
+<label class="alert-success">@ViewBag.Message</label>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="products">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProduct)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProducName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdGender)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdProduct)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProducName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <img src="@Html.DisplayFor(modelItem => item.Image)" alt="@Html.DisplayFor(modelItem => item.ProducName)" class="image-preview" /> 
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender.GenderName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Categories", "GetCategoriesByProduct", new { id=item.IdProduct }) 
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+
+</table>
+@section scripts{
+    
+    <script type="text/javascript" charset="utf8">
+        
+        $(document).ready(function () {
+            $('#products').DataTable();
+        });
+    </script>
+}

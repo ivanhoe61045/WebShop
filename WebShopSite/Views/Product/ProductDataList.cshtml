@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebShopSite.Models.WebShopViewModels.ProdutCreationViewModel>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+    {
+        <div class="card">
+            <p>@Html.DisplayFor(modelItem => item.ProducName)</p>
+            <img data-src="@Html.DisplayFor(modelItem => item.Image)" class="img-product" alt="@Html.DisplayFor(modelItem => item.ProducName)" style="height: 280px; width: 100%; display: block;" src="@Html.DisplayFor(modelItem => item.Image)" data-holder-rendered="true">
+            <p>@Html.DisplayFor(modelItem => item.Price)</p>
+            <p>@Html.DisplayFor(modelItem => item.Title)</p>
+            <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+        </div>
+
+    }
+
+    </div>
+</div>
