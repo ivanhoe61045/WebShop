@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebShopSite.Models.WebShopViewModels
 {
     public class CategoriesViewModel
     {
-        [Display(Name ="Category Number")]
+        [Display(Name = "Category Number")]
         public int IdCategory { get; set; }
 
         [Required]

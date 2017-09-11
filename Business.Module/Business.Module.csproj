@@ -30,12 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,14 +50,9 @@
     <Compile Include="BusinessEntyties\OrderState.cs" />
     <Compile Include="BusinessEntyties\Product.cs" />
     <Compile Include="BusinessEntyties\ProductCategory.cs" />
-    <Compile Include="DependencyBindings\Bindings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Persistence.Data\Persistence.Data.csproj">
-      <Project>{36555ba2-a1ff-4bb4-b179-0eb455f2a8e2}</Project>
-      <Name>Persistence.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Transversal.Module\Transversal.Module.csproj">
       <Project>{5beea157-adc6-4d42-aa9a-667b15f89582}</Project>
       <Name>Transversal.Module</Name>

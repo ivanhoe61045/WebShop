@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using Application.GenderA.Commands;
+using Application.GenderA.Queries;
 using Business.Module.BusinessEntyties;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Transversal.Module.CustomException;
 using WebShopSite.Models.WebShopViewModels;
@@ -13,12 +12,19 @@ namespace WebShopSite.Controllers
 {
     public class GenderController : Controller
     {
+        private readonly IGenderListQuery _getGenderListQuery;
+        private readonly ICommandsGender _createGenderCommand;
+
+        public GenderController(ICommandsGender commandGender, IGenderListQuery genderListQuery)
+        {
+            _createGenderCommand = commandGender;
+            _getGenderListQuery = genderListQuery;
+        }
         // GET: Gender
         public ActionResult Index()
         {
-            var GenderBO = new Gender();
             var ListGenderViewModel = new List<GenderViewModel>();
-            var ListGender = GenderBO.GetAllGender();
+            var ListGender = _getGenderListQuery.GetAllGender();
             if (((List<Gender>)ListGender).Count == 0)
                 return View(ListGenderViewModel);
                         
@@ -43,10 +49,7 @@ namespace WebShopSite.Controllers
                 {
                     var genderBussines = MappingUtility.MappFromGenderViewModelToGenderBO(gender);
                     if (genderBussines != null)
-                    {
-                        var genderBO = new Gender(genderBussines);
-                        genderBO.AddGender();
-                    }
+                        _createGenderCommand.AddGender(genderBussines);                    
                     else
                         throw new MappingFailedException("The Gender mapping failed");
                 }

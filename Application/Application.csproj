@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE478B10-42B1-4243-B615-85547C40CDB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Application</RootNamespace>
+    <AssemblyName>Application</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Categories\Commands\CreateCategoryCommand.cs" />
+    <Compile Include="Categories\Commands\ICreateCategoryCommand.cs" />
+    <Compile Include="Categories\Queries\Factory\CategoriesFactory.cs" />
+    <Compile Include="Categories\Queries\Factory\ICategoriesFactory.cs" />
+    <Compile Include="Categories\Queries\GetCategoriesList\GetCategoriesListQuery.cs" />
+    <Compile Include="Categories\Queries\GetCategoriesList\IGetCategoriesListQuery.cs" />
+    <Compile Include="GenderA\Commands\CommandsGender.cs" />
+    <Compile Include="GenderA\Commands\ICommandsGender.cs" />
+    <Compile Include="GenderA\Queries\Factory\GenderFactory.cs" />
+    <Compile Include="GenderA\Queries\Factory\IGenderFactory.cs" />
+    <Compile Include="GenderA\Queries\GenderListQuery.cs" />
+    <Compile Include="GenderA\Queries\IGenderListQuery.cs" />
+    <Compile Include="ProductA\Commands\CommandProduct.cs" />
+    <Compile Include="ProductA\Commands\ICommandProduct.cs" />
+    <Compile Include="ProductA\Queries\Factory\IProductFactory.cs" />
+    <Compile Include="ProductA\Queries\Factory\ProductFactory.cs" />
+    <Compile Include="ProductA\Queries\IProductsQuery.cs" />
+    <Compile Include="ProductA\Queries\ProductsQuery.cs" />
+    <Compile Include="ProductCategoryA\Commands\CommandsProductCategory.cs" />
+    <Compile Include="ProductCategoryA\Commands\ICommandsProductCategory.cs" />
+    <Compile Include="ProductCategoryA\Queries\IProductCategoryQuery.cs" />
+    <Compile Include="ProductCategoryA\Queries\ProductCategoryQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Business.Module\Business.Module.csproj">
+      <Project>{dc16b054-70e1-47c2-9e0e-f6d3d49fa5fb}</Project>
+      <Name>Business.Module</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence.Data\Persistence.Data.csproj">
+      <Project>{36555ba2-a1ff-4bb4-b179-0eb455f2a8e2}</Project>
+      <Name>Persistence.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Transversal.Module\Transversal.Module.csproj">
+      <Project>{5beea157-adc6-4d42-aa9a-667b15f89582}</Project>
+      <Name>Transversal.Module</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

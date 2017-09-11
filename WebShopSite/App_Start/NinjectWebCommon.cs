@@ -3,6 +3,12 @@
 
 namespace WebShopSite.App_Start
 {
+    using Application.Categories.Commands;
+    using Application.Categories.Queries.GetCategoriesList;
+    using Application.GenderA.Commands;
+    using Application.GenderA.Queries;
+    using Application.ProductA.Commands;
+    using Application.ProductA.Queries;
     using global::Ninject;
     using global::Ninject.Web.Common;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -62,6 +68,12 @@ namespace WebShopSite.App_Start
         {
             kernel.Bind<ISaveFilesFromRequest>().To<SaveFilesFromRequest>();
             kernel.Bind<IGetFilesFromRequest>().To<GetFilesFromRequest>();
+            kernel.Bind<IGetCategoriesListQuery>().To<GetCategoriesListQuery>();
+            kernel.Bind<ICreateCategoryCommand>().To<CreateCategoryCommand>();
+            kernel.Bind<IGenderListQuery>().To<GenderListQuery>();
+            kernel.Bind<ICommandsGender>().To<CommandsGender>();
+            kernel.Bind<IProductsQuery>().To<ProductsQuery>();
+            kernel.Bind<ICommandProduct>().To<CommandProduct>();
         }
     }
 }

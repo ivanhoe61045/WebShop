@@ -1,4 +1,8 @@
-﻿using Business.Module.BusinessEntyties;
+﻿using Application.Categories.Queries.GetCategoriesList;
+using Application.GenderA.Queries;
+using Application.ProductA.Commands;
+using Application.ProductA.Queries;
+using Business.Module.BusinessEntyties;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -14,24 +18,29 @@ namespace WebShopSite.Controllers
     {
         private readonly ISaveFilesFromRequest _saleFilesFromRequest;
         private readonly IGetFilesFromRequest _getFilesFromRequest;
+        private readonly ICommandProduct _commandProduct;
+        private readonly IProductsQuery _productsQuery;
+        private readonly IGetCategoriesListQuery _getCategoriesListQuery;
+        private readonly IGenderListQuery _getGenderListQuery;
 
-        public ProductController()
-        {
-
-        }
         [Inject]
-        public ProductController(ISaveFilesFromRequest saleFilesFromRequest, IGetFilesFromRequest getFilesFromRequest)
+        public ProductController(ISaveFilesFromRequest saleFilesFromRequest, IGetFilesFromRequest getFilesFromRequest, 
+                                 ICommandProduct commandProduct, IProductsQuery productsQuery, IGetCategoriesListQuery getCategorieslistquery,
+                                 IGenderListQuery genderListQuery)
         {
             _saleFilesFromRequest = saleFilesFromRequest;
             _getFilesFromRequest = getFilesFromRequest;
+            _commandProduct = commandProduct;
+            _productsQuery = productsQuery;
+            _getCategoriesListQuery = getCategorieslistquery;
+            _getGenderListQuery = genderListQuery;
         }
 
         // GET: Product
         public ActionResult Index()
-        {
-            var productBO = new Product();
+        {            
             var ListProductViewModel = new List<ProdutCreationViewModel>();
-            var ListProducts = productBO.GetAllProducts();
+            var ListProducts = _productsQuery.GetAllProducts();
             if (((List<Product>)ListProducts).Count == 0)
                 return View(ListProductViewModel);
 
@@ -42,9 +51,8 @@ namespace WebShopSite.Controllers
         [HttpGet]
         public ActionResult IndexProduct()
         {
-            var productBO = new Product();
             var ListProductViewModel = new List<ProdutCreationViewModel>();
-            var ListProducts = productBO.GetAllProducts();
+            var ListProducts = _productsQuery.GetAllProducts();
             if (((List<Product>)ListProducts).Count == 0)
                 return View(ListProductViewModel);
             List<ProdutCreationViewModel> ListProductEntityViewModel = MappingUtility.MappFromProductViewModelToProduct(ListProducts);
@@ -54,9 +62,8 @@ namespace WebShopSite.Controllers
         [HttpGet]
         public ActionResult GetDataProduct()
         {
-            var productBO = new Product();
             var ListProductViewModel = new List<ProdutCreationViewModel>();
-            var ListProducts = productBO.GetAllProducts();
+            var ListProducts = _productsQuery.GetAllProducts();
             if (((List<Product>)ListProducts).Count == 0)
                 return PartialView("ProductDataList", ListProductViewModel);
             var ListProductEntityViewModel = MappingUtility.MappFromProductViewModelToProduct(ListProducts);
@@ -72,11 +79,10 @@ namespace WebShopSite.Controllers
             return View(ProdutViewModel);
         }
 
-        private static ProdutCreationViewModel LoadCategories()
+        private ProdutCreationViewModel LoadCategories()
         {
             var ProdutViewModel = new ProdutCreationViewModel();
-            var categoryBO = new Category();
-            var listCategories = categoryBO.GetAll();
+            var listCategories = _getCategoriesListQuery.GetAll();
             var listCategoriesViewModel = MappingUtility.MappFromCategoriesBOToCategoriesViewModel(listCategories);
             ProdutViewModel.ListCategories = listCategoriesViewModel;
             return ProdutViewModel;
@@ -84,8 +90,7 @@ namespace WebShopSite.Controllers
 
         private void LoadGender()
         {
-            var genderBO = new Gender();
-            var genderList = genderBO.GetAllGender();
+            var genderList = _getGenderListQuery.GetAllGender();
             ViewBag.IdGender = new SelectList(genderList, "IdGender", "GenderName");
         }
 
@@ -105,8 +110,7 @@ namespace WebShopSite.Controllers
                     var saveFile = _saleFilesFromRequest.SaveFile(Request, Server.MapPath("~/Images/").ToString(), product);
                     filePath = ValidationPath(product, saveFile);
                     var productBussines = MappingUtility.MappFromProductViewToProductBO(product);
-                    var productBO = new Product(productBussines);
-                    productBO.AddProduct();
+                    _commandProduct.AddProduct(productBussines);
                     //hub
                     ProductHub.ProductData();
                     ViewBag.Message = "Product created success";
@@ -158,14 +162,12 @@ namespace WebShopSite.Controllers
 
         private Gender GetGenderById(int idGender)
         {
-            var genderBO = new Gender();
-            return genderBO.GetGenderById(idGender);
+            return _getGenderListQuery.GetGenderById(idGender);
         }
 
         public ActionResult GetCategoriesByProduct(int id)
         {
-            var ProductCategoryBO = new ProductCategory();
-            var ProductCategory = ProductCategoryBO.GetCategoriesByProduct(id);
+            var ProductCategory = _productsQuery.GetCategoriesByProduct(id);
 
             return View(ProductCategory);
         }
